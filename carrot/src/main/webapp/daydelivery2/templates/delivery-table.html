@@ -1,0 +1,50 @@
+<table id='daydeliveryTable' class="table table-striped table-hover">
+	<thead>
+		<tr class="table_head">
+			<th>상품코드</th>
+			<th>상품명</th>
+			<th>분류</th>
+			<th>단위</th>
+			<th>수량</th>
+			<th>가격</th>
+			<th>비고</th>
+		</tr>
+	</thead>
+
+		{{#each daydeliverys}}
+		<tr class="data-row">
+			<td>{{gno}}</td>
+			<td>{{gname}}</td>
+			<td>{{gcat}}</td>
+			<td>{{gunit}}</td>
+			<td>{{oqty}}</td>
+			<td>{{oprice2}}</td> 
+			<td>{{gmemo}}</td>
+
+			<!-- <td><button data-no='{{gno}}' class='my-delete-btn btn btn-danger'>삭제</button></td> -->
+		</tr>												
+		{{/each}}
+		
+</table> 
+
+<div id="totalDiv"><div class="well" id="footDiv">주문총액 :<span id="sum"></span>원</div></div>
+<script>
+$(document).ready(function() {
+	$('.check-all').click(function() {
+		$('.ab').prop('checked',this.checked);
+	});
+});
+var sum = 0;
+
+var MyRows = $('#daydeliveryTable').find('tr');
+for (var i = 1; i < MyRows.length; i++) {
+	var a = $(MyRows[i]).find('td:eq(4)').html(); 
+	var b = $(MyRows[i]).find('td:eq(5)').html();
+	var c = a*b;
+	sum = sum + c;
+	console.log("수량*가격 : ",c);
+	console.log("합계 : ",sum);
+}
+$('#sum').html(sum);
+
+</script>

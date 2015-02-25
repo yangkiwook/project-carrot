@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <sql> 태그 사용하기
+=> 자주 사용되는 SQL문은 별도로 정의해두고 포함한다.
+-->
+
+<mapper namespace="carrot.dao.OrderDao">
+
+  <!-- 객체의 컬럼과 프로퍼티를 연결한다. -->
+  <resultMap type="Order3" id="orderMap">
+    <!-- PK 컬럼은 id 태그를 사용하여 지정한다. -->
+    <id column="ONO" property="no"/>
+    <result column="SNO" property="supplierNo"/>
+    <result column="CNO" property="clientNo"/>
+    <result column="GNO" property="goodsNo"/>
+    <result column="ODATE" property="orderDate"/>
+    <result column="ORDATE" property="endDate"/>
+    <result column="OQTY" property="quantity"/>
+    <result column="ODEL_STAT" property="delState"/>
+    <result column="OMEMO" property="note"/>
+  </resultMap>
+
+  
+  <resultMap type="map" id="orderClientListMap">
+    <!-- PK 컬럼은 id 태그를 사용하여 지정한다. -->
+    <id column="ONO" property="no"/>
+    <result column="ODATE" property="orderDate"/>
+    <result column="ORDATE" property="endDate"/>
+    <result column="OQTY" property="quantity"/>
+    <result column="ODEL_STAT" property="delState"/>
+    <result column="OMEMO" property="note"/>
+    
+    <result column="SNO" property="supplierNo"/>
+    <result column="SCNAME" property="supplierName"/>
+    
+    <result column="CNO" property="clientNo"/>
+    <result column="CCNAME" property="clientName"/>
+    
+    <result column="TOT_PRICE" property="monthTotal"/>
+    
+    <result column="MLEVEL" property="level"/>
+    
+   	<result column="GNO" property="goodsNo"/>
+    <result column="GNAME" property="name"/>
+    <result column="GUNIT" property="unit"/>
+		<result column="GCAT" property="category"/>
+  </resultMap>
+  
+
+  <resultMap type="map" id="myOrderListMap">
+   	<id column="GCODE" property="goodsCode"/>
+    <result column="ODATE" property="orderDate"/>
+    <result column="OQTY" property="quantity"/>
+    <result column="GNAME" property="name"/>
+    <result column="GUNIT" property="unit"/>
+		<result column="GCAT" property="category"/>
+  </resultMap>
+  
+  
+  	<resultMap type="Order" id="orderMap2">
+		<!-- PK 컬럼은 id 태그를 사용하여 지정한다. -->
+		<id column="CNO" property="cno" />
+		<result column="SNO" property="sno" />
+		<result column="CCNAME" property="oname" />
+		<result column="MLEVEL" property="ograde" />
+		<result column="ODATE" property="oodate" />
+		<result column="ORDATE" property="oddate" />
+		<result column="OPRICE" property="oprice" />
+		<result column="TOT_PRICE" property="monthsum" />
+		<result column="DEL_STAT" property="del_stat" />
+		<result column="GCODE" property="gcode" />
+		<result column="GUNIT" property="gunit" />
+		<result column="OMEMO" property="omemo" />
+		<result column="ONO" property="ocode" />
+
+	</resultMap>
+	<!-- 
+	<resultMap type="map" id="orderClientListMap">
+		PK 컬럼은 id 태그를 사용하여 지정한다.
+		<id column="ONO" property="no" />
+		<result column="ODATE" property="orderDate" />
+		<result column="ORDATE" property="endDate" />
+
+		<result column="OQTY" property="quantity" />
+		<result column="ODEL_STAT" property="delState" />
+		<result column="OMEMO" property="note" />
+
+		<result column="SNO" property="supplierNo" />
+		<result column="SCNAME" property="supplierName" />
+
+		<result column="CNO" property="clientNo" />
+		<result column="CCNAME" property="clientName" />
+
+		<result column="TOT_PRICE" property="monthTotal" />
+
+		<result column="MLEVEL" property="mlevel" />
+
+		<result column="GCODE" property="goodsCode" />
+		<result column="GNAME" property="name" />
+		<result column="GUNIT" property="unit" />
+		<result column="GCAT" property="category" />
+	</resultMap>
+
+ -->
+
+ 
+	<select id="selectList" parameterType="map" resultMap="orderClientListMap">
+
+		SELECT C.CNO, C.CCNAME, M.MLEVEL,
+			O.ONO,O.ORDATE,O.ODATE, O.OQTY,O.ODEL_STAT, O.OMEMO, OT.TOT_PRICE,
+		  O.GCODE, G.GNAME, G.GUNIT, G.GCAT
+		FROM ORDERLIST O LEFT JOIN GOODS G ON O.GCODE=G.GCODE
+			LEFT JOIN CLIENT C ON O.CNO=C.CNO
+			LEFT JOIN MATCHING M ON C.CNO=M.CNO
+			LEFT JOIN ORDERTOTAL OT ON O.CNO=OT.CNO
+ 		WHERE M.SNO=#{supplierNo} AND O.ODATE between "2015-02-03" and "2015-03-01" group by O.ODATE, CCNAME 	
+		ORDER BY O.ODATE DESC	
+		<if test="pageSize > 0">
+			limit #{startIndex}, #{pageSize}
+		</if>
+
+</select>
+		
+
+
+
+	<select id="selectList_order" parameterType="map" resultMap="orderClientListMap">
+		SELECT C.CNO, C.CCNAME,
+		O.ONO,O.ORDATE,O.ODATE,
+		O.OQTY, O.ODEL_STAT, O.OMEMO, 
+		G.GCODE, G.GNAME, G.GUNIT, G.GCAT,
+		S.SNAME
+		FROM CLIENT C 
+		LEFT JOIN ORDERLIST O 
+		ON C.CNO=O.CNO
+		LEFT JOIN SUPPLIER S
+		ON S.SNO = O.SNO
+		LEFT JOIN GOODS G 
+		ON O.GCODE=G.GCODE
+		WHERE C.CNO=#{clientNo} AND O.ORDATE=CURDATE() AND S.SNAME=#{supplierName}
+	</select>
+
+
+
+	<select id="selectList2" parameterType="map" resultMap="orderClientListMap">
+		SELECT C.CNO, O.SNO, O.ORDATE, S.SCNAME,
+		O.OQTY, O.ODEL_STAT, O.OMEMO, 
+		G.GCODE, G.GNAME, G.GUNIT, G.GCAT
+		FROM CLIENT C
+		LEFT JOIN ORDERLIST O
+		ON	 C.CNO=O.CNO
+		LEFT JOIN SUPPLIER S
+		ON O.SNO = S.SNO 
+		LEFT JOIN GOODS G 
+		ON O.GCODE=G.GCODE
+		WHERE C.CNO=#{clientNo}
+		AND O.ORDATE = CURDATE()
+		ORDER BY S.SCNAME
+	</select>
+  
+<!-- 
+	<select id="selectList2" parameterType="map" resultMap="orderMap2">
+		<include refid="selectOne2" />
+
+		SELECT O.ONO, C.CCNAME, M.MLEVEL, O.ORDATE, O.ODATE , O.OPRICE ,
+		O.ODEL_STAT, O.OMEMO
+			FROM CLIENT C, MATCHING M, ORDERLIST O
+		WHERE C.CNO = M.CNO 
+		AND M.SNO = O.SNO AND O.CNO = M.CNO
+		AND M.SNO=#{sno}
+		GROUP BY O.ODATE
+		ORDER BY O.ODATE DESC
+		<if test="pageSize > 0">
+			limit #{startIndex}, #{pageSize}
+		</if>
+	</select>
+   -->
+        
+        
+
+  <select id="selectMyOrderList" parameterType="map" 
+        resultMap="myOrderListMap">
+	  SELECT DISTINCT G.GCODE, G.GNAME, G.GUNIT, G.GCAT, O.OQTY, O.ODATE
+			FROM GOODS G LEFT JOIN ORDERLIST O ON G.GCODE=O.GCODE
+ 		WHERE O.SNO=#{supplierNo}
+			and O.CNO=#{clientNo}	
+		ORDER BY O.ODATE DESC
+		limit #{orderSize}
+
+  </select>  
+
+  <select id="orderTotalSize" resultType="int">
+		SELECT count(distinct ODATE,CCNAME)
+		FROM ORDERLIST O LEFT JOIN GOODS G ON O.GCODE=G.GCODE
+			LEFT JOIN CLIENT C ON O.CNO=C.CNO
+			LEFT JOIN MATCHING M ON C.CNO=M.CNO
+			LEFT JOIN ORDERTOTAL OT ON O.CNO=OT.CNO
+ 		WHERE M.SNO=#{value}
+ 	</select>
+
+
+  <insert id="insert" parameterType="Order3"
+    useGeneratedKeys="true" keyColumn="ONO" keyProperty="no">
+		insert into ORDERLIST(SNO,CNO,GCODE,ODATE,ORDATE,OQTY,ODEL_STAT,OMEMO,OPRICE)
+			select #{supplierNo}, #{clientNo},#{goodsCode},CURDATE(),#{endDate},#{quantity},#{delState},#{note},(#{quantity})*(case M.MLEVEL when '1' then G.GPRICE_A
+			    when '2' then G.GPRICE_B 
+			    when '3' then G.GPRICE_C
+			  end)
+	    	from GOODS G LEFT JOIN MATCHING M ON G.SNO=G.SNO
+			where M.SNO=#{supplierNo}
+			and M.CNO=#{clientNo}
+			and G.GCODE=#{goodsCode}
+	</insert>
+<!--   
+  <update id="update" parameterType="Order">
+    UPDATE PRODUCTS SET 
+      PNAME=#{name},
+      OQTY=#{quantity},
+      MKNO=#{makerNo},
+      MADE_DATE=#{madeDate} 
+    WHERE PNO=#{no}
+  </update>
+   -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM ORDERLIST WHERE ONO=#{value}
+  </delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

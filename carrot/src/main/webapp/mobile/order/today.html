@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="../css/Bootstrap.min.css">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+<link rel="stylesheet" href="../css/jquery.mobile.icons.min.css"">
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+<script type="text/javascript" src='../../js/handlebars-v2.0.0.js'></script>
+<script type="text/javascript" src='../../js/require.js'></script>
+<script src='list_detail.js'></script>
+
+<meta charset="UTF-8">
+
+
+<style type="text/css"> 
+    table { width:100%; }
+    table caption { text-align:left;  }
+    table thead th { text-align:left; border-bottom-width:1px; border-top-width:1px; }
+    table th, td { text-align:left; padding:6px;} 
+</style> 
+
+
+<title>Insert title here</title>
+</head>
+<body>
+<div data-role="page" data-theme="a" id="page_order">
+
+
+<!-- header -->
+	<div data-role="header" data-position="inline" >
+		<h1>Carrot</h1>
+		<a href="index.html" data-icon="gear" class="ui-btn-right" style="border:#222222;background-color:#222222"></a>
+	</div>
+
+	<div data-role="navbar" data-theme="a">
+		<ul>
+			<li><a href="../order/today.html" data-icon="star" class="ui-btn-active">today</a></li>
+			<li><a href="../order/list.html" data-icon="grid">주문내역</a></li>
+			<li><a href="../order/app.html" data-icon="plus">주문</a></li>
+		</ul>	
+	</div>
+
+
+
+	<!-- content -->
+	<div data-role="content" data-theme="a">
+	
+				<div data-role="main" class="ui-content" >
+				<div id='listDiv' data-role="collapsible" class="ui-content"></div>
+			</div>
+	
+	</div>
+	
+<!-- 	<div id="popupBasic" data-transition="pop"
+	class="ui-btn  ui-corner-all ui-shadow ui-btn-inside ui-icon-delete ui-btn-icon-bottom"> -->
+	
+	</div>
+
+<script>
+
+</script>
+
+</body>
+</html>

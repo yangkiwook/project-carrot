@@ -1,0 +1,24 @@
+<!-- <table id='myOrderTable' class="table table-striped table-hover">
+	<thead>
+		<tr class="table_head">
+			<th>분류</th>
+			<th>상품명</th>
+			<th>단위</th>
+			<th>수량</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+ -->
+		{{#each orders}}
+		<tr>
+			<td>{{goodsCode}}</td>
+			<td>{{name}}</td>
+			<td>{{unit}}</td>
+			<td><input type='number' id='orderqty'
+								placeholder='{{quantity}}'></td>
+			<td><input type="button" class="ibtnDel" value="X"></td>
+		</tr>
+		{{/each}}
+<!-- 		
+</table> 
+ -->

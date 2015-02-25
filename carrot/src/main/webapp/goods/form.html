@@ -1,0 +1,35 @@
+<html>
+<title>HTML FORM</title>
+<head>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script type="text/javascript">   
+//Entry Point Of Jquery
+$(document).ready(function () {
+	$("#idbtnOk").click(function(){
+		$('#idOfTable tbody>tr:last').clone(true).insertAfter('#idTable tbody>tr:last');
+		$('#idOfTable tbody>tr:last #idlblOfFirstControl').text("Your Data");
+		});
+});
+</script>
+
+</head>
+<body>
+<input id="txt" type="text" />
+<br/>
+<input id="idbtnOk" ClientIDMode="Static"
+ type="button" value="Ok" />
+<br/>
+<table id="idOfTable" ClientIDMode="Static"
+ style="width:854px;"cellspacing="0"cellpadding="0" border="1" >
+  <tr align="left" style="height:30px">
+     <th><b> Control </b></th>                 
+  </tr>
+  <tr align="left">
+    <td><label id="idlblOfFirstControl"></label></td>
+  </tr>
+</table>
+
+</body>
+</html>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="carrot.dao.MatchingDao">
+
+	<resultMap type="map" id="matchingListMap">
+		<!-- PK 컬럼은 id 태그를 사용하여 지정한다. -->
+		<id column="CNO" property="no" />
+		<id column="SNO" property="supplierNo" />
+		<result column="MLEVEL" property="mLevel" />
+		<result column="MDATE" property="mDate" />
+	</resultMap>
+
+	<sql id="matchingSelect">
+		SELECT CNO, SNO, MLEVEL, MDATE
+		FROM MATCHING
+	</sql>
+
+	<select id="selectList" parameterType="map" resultMap="matchingListMap">
+		<include refid="matchingSelect" />
+		<if test="pageSize > 0">
+			limit #{startIndex}, #{pageSize}
+		</if>
+	</select>
+
+	<select id="selectOne" parameterType="int" resultMap="matchingListMap">
+		<include refid="matchingSelect" />
+		WHERE CNO=#{value}
+	</select>
+
+	<select id="totalSize" parameterType="int" resultType="int">
+		SELECT count(SNO) FROM MATCHING WHERE SNO=#{value}
+	</select>
+
+	<insert id="insert" parameterType="Client" useGeneratedKeys="true"
+		keyColumn="CNO" keyProperty="no">
+	INSERT INTO MATCHING(CNO,SNO,MLEVEL,MDATE)
+	VALUES (#{no},#{supplierNo},#{mLevel},#{mDate})
+	</insert>
+
+	<update id="update" parameterType="Matching">
+		UPDATE MATCHING SET
+		CNO=#{clientMatchNo},
+		MLEVEL=#{mLevel},
+		MDATE=#{mDate},
+		WHERE CNO=#{no}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM MATCHING WHERE CNO=#{value}
+	</delete>
+</mapper>
+

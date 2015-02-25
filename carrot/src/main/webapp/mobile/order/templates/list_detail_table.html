@@ -1,0 +1,65 @@
+<h2>금일 주문업체</h2>
+<div data-role="collapsible" class="ui-content" data-content-theme="b">
+{{#each orders}}
+{{#if @first}}
+<h3 class="ui-btn ui-corner-all ui-shadow ui-btn-inside {{#if @first}}first{{/if}}{{#if @last}} last{{/if}}" >{{supplierName}}</h3>
+{{/if}}
+{{/each}}
+
+
+		<table>
+		<thead class="ui-responsive" style="background-color: #e9e9e9">
+			<tr>
+				<th>제품번호</th>
+				<th>분류</th>
+				<th>제품명</th>
+				<th>수량</th>
+				<th>단위</th>
+			</tr>
+		</thead>
+		{{#orders}}
+		<tr>
+			<td>{{goodsCode}}</td>
+			<td>{{category}}</td>
+			<td>{{name}}</td>
+			<td>{{quantity}}</td>
+			<td>{{unit}}</td>
+		</tr>
+		{{/orders}}
+	</table>
+
+</div>
+<!-- <div id='listDiv_a' data-role="popup" rel="external"></div> -->
+
+<!-- {{#if orders_a}}
+ <div   id="popupBasic"  data-transition="pop"  class="ui-btn  ui-corner-all ui-shadow ui-btn-inside ui-icon-delete ui-btn-icon-bottom"  >
+	<table>
+		<thead class="ui-responsive" style="background-color: #e9e9e9">
+			<tr>
+				<th>제품번호</th>
+				<th>분류</th>
+				<th>제품명</th>
+				<th>수량</th>
+				<th>단위</th>
+			</tr>
+		</thead>
+{{#orders_a}}
+		<tr>
+			<td>{{goodsNo}}</td>
+			<td>{{category}}</td>
+			<td>{{name}}</td>
+			<td>{{quantity}}</td>
+			<td>{{unit}}</td>
+		</tr>
+		{{/orders_a}}
+	</table>
+</div>
+		{{/if}}
+		
+		
+		<a href="#popupBasic" id="popupBasicc-popup" data-rel="popup"
+	class="ui-btn ui-corner-all ui-shadow ui-btn-inside {{#if @first}}first{{/if}}{{#if @last}} last{{/if}}" >
+	{{@supplierName}} - {{@last}}</a>
+	 -->
+
+

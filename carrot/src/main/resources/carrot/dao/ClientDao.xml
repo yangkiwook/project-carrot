@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dataDB 입력 INSERT INTO CLIENT(CNO, CTEL, CPWD, CCNAME, CMAIL, CNAME, 
+	CPOSTNO, CADDR, CADDR_DET, CMEMO) VALUES ('01','111-1111','1111','cor01','c01@c01','c01','111-111','서울','강남구','-'); -->
+
+<mapper namespace="carrot.dao.ClientDao">
+
+	<!-- 객체의 컬럼과 프로퍼티를 연결한다. -->
+	<resultMap type="Client" id="clientMap">
+		<!-- PK 컬럼은 id 태그를 사용하여 지정한다. -->
+		<id column="CNO" property="no" />
+		<result column="CCNAME" property="clientCorName" />
+		<result column="CNAME" property="clientName" />
+		<result column="CPWD" property="clientPassword" />
+		<result column="CTEL" property="clientTel" />
+		<result column="CMAIL" property="clientMail" />
+		<result column="CPOSTNO" property="clientPostNo" />
+		<result column="CADDR" property="clientAddress" />
+		<result column="CADDR_DET" property="clientAddressDet" />
+		<result column="CMEMO" property="clientMemo" />
+
+		<result column="TOT_PRICE" property="orderMonthTotal" />
+	</resultMap>
+
+	<resultMap type="map" id="clientListMap">
+		<!-- PK 컬럼은 id 태그를 사용하여 지정한다. -->
+		<id column="CNO" property="no" />
+		<result column="SNO" property="supplierNo" />
+		<result column="MLEVEL" property="mLevel" />
+		<result column="MDATE" property="mDate" />
+
+		<result column="CCNAME" property="clientCorName" />
+		<result column="CNAME" property="clientName" />
+		<result column="CPWD" property="clientPassword" />
+		<result column="CTEL" property="clientTel" />
+		<result column="CMAIL" property="clientMail" />
+		<result column="CPOSTNO" property="clientPostNo" />
+		<result column="CADDR" property="clientAddress" />
+		<result column="CADDR_DET" property="clientAddressDet" />
+		<result column="CMEMO" property="clientMemo" />
+
+		<result column="TOT_PRICE" property="orderMonthTotal" />
+	</resultMap>
+	
+	<sql id="clientSelect">
+		SELECT C.CNO, C.CCNAME, C.CNAME, C.CPWD, C.CTEL, C.CMAIL,
+		C.CPOSTNO,
+		C.CADDR, C.CADDR_DET, C.CMEMO, M.MLEVEL, T.TOT_PRICE
+		FROM
+		CLIENT C
+		LEFT JOIN MATCHING M
+		ON C.CNO = M.CNO
+		LEFT JOIN ORDERTOTAL T
+		ON
+		M.CNO = T.CNO
+		group by CNO
+	</sql>
+
+	<select id="selectList" parameterType="map" resultMap="clientListMap">
+		SELECT C.CNO, C.CTEL, C.CPWD, C.CCNAME, C.CMAIL, C.CNAME, C.CPOSTNO,
+		C.CADDR, C.CADDR_DET, C.CMEMO, M.MLEVEL, M.MDATE, T.TOT_PRICE
+		FROM
+		CLIENT C
+		LEFT JOIN MATCHING M
+		ON C.CNO = M.CNO
+		LEFT JOIN ORDERTOTAL T
+		ON
+		M.CNO = T.CNO
+		WHERE M.SNO=#{supplierNo}
+		<if test="pageSize > 0">
+			limit #{startIndex}, #{pageSize}
+		</if>
+	</select>
+	
+	<!-- <select id="selectMatchList" parameterType="map" resultMap="MatchingMap"> 
+		<include refid="clientSelect"/> <if test="pageSize > 0"> limit #{startIndex}, 
+		#{pageSize} </if> </select> -->
+
+	<select id="selectOne" parameterType="int" resultMap="clientMap">
+		<include refid="clientSelect" />
+		WHERE C.CNO=#{value}
+	</select>
+
+	<select id="totalSize" parameterType="int" resultType="int">
+		SELECT
+		count(CNO) FROM MATCHING WHERE SNO=#{value}
+	</select>
+	
+	<select id="totalSize_order" parameterType="int" resultType="int">
+		SELECT
+		count(CNO) FROM MATCHING WHERE CNO=#{value}
+	</select>
+
+	<insert id="insert" parameterType="Client" useGeneratedKeys="true"
+		keyColumn="CNO" keyProperty="no">
+		INSERT INTO CLIENT(
+		CCNAME, CNAME, CPWD,
+		CTEL, CMAIL, CPOSTNO, CADDR,
+		CADDR_DET, CMEMO)
+		VALUES
+		(#{clientCorName},#{clientName},#{clientPassword},#{clientTel},#{clientMail},#{clientPostNo},#{clientAddress},#{clientAddressDet},#{clientMemo})
+	</insert>
+
+	<insert id="insertMatch" parameterType="Client">
+		INSERT INTO
+		MATCHING(CNO,SNO,MLEVEL,MDATE)
+		VALUES
+		(#{no},#{supplierNo},#{mLevel},SYSDATE())
+	</insert>
+
+	<update id="update" parameterType="Client">
+		UPDATE CLIENT SET
+		CCNAME=#{clientCorName},
+		CNAME=#{clientName},
+		CPWD=#{clientPassword},
+		CTEL=#{clientTel},
+		CMAIL=#{clientMail},
+		CPOSTNO=#{clientPostNo},
+		CADDR=#{clientAddress},
+		CADDR_DET=#{clientAddressDet},
+		CMEMO=#{clientMemo}
+		WHERE CNO=#{no}
+	</update>
+
+	<update id="updateMatch" parameterType="Client">
+		UPDATE MATCHING SET
+		MLEVEL=#{mLevel}
+		WHERE CNO=#{no}
+	</update>
+
+	<delete id="deleteMatch" parameterType="int">
+		DELETE FROM MATCHING
+		WHERE CNO=#{value}
+	</delete>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM CLIENT WHERE
+		CNO=#{value}
+	</delete>
+
+	<select id="existUser" parameterType="map" resultMap="clientMap">
+		SELECT *
+		FROM CLIENT
+		WHERE CTEL=#{clientTel} AND CPWD=#{clientPassword}
+	</select>
+
+</mapper>
+

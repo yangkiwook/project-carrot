@@ -1,0 +1,50 @@
+#post1 {
+	width: 25%;
+	float: left;
+	margin: 0px 5px;
+}
+
+#post2 {
+	width: 25%;
+	float: left;
+	margin: 0px 5px;
+}
+
+#minus {
+	width: 5px;
+	float: left;
+margin: 12px 5px 0 5px;
+}
+
+#address {
+	width: 300px;
+	height: 55px;
+}
+
+#postBtn {
+	float: left;
+	width : 80px;
+	padding : 0 4px 1px 4px;
+	margin: 4px 0px 0px 30px;
+	cursor : pointer;
+}
+
+#postBtn:hover {
+background : #10689a;
+}
+
+#addr {
+	margin: 7px 0px  ;
+}
+
+#addr2 {
+	margin: 7px 0px  ;
+}
+
+#checkMsg {
+	color:#fff;
+}
+
+#checkPwd {
+	color:#fff;
+}

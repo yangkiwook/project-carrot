@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="../css/Bootstrap.min.css">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+<link rel="stylesheet" href="../css/jquery.mobile.icons.min.css"">
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/carrot/css/fileinput.min.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/carrot/css/bootstrap-select.css">
+<link rel='stylesheet' href='/carrot/css/common-mobile.css'>
+
+
+<style type="text/css"> 
+    table { width:100%; }
+    table caption { text-align:left;  }
+    table thead th { text-align:left; border-bottom-width:1px; border-top-width:1px; }
+    table th, td { text-align:left; padding:6px;} 
+</style> 
+
+
+</head>
+
+<body>
+	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<h1>Carrot</h1>
+			<a href="index.html" data-icon="gear" class="ui-btn-right"
+				style="border: #222222; background-color: #222222"></a>
+			<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a href="../order/today.html" data-icon="star">today</a></li>
+					<li><a href="../order/list.html" data-icon="grid">주문내역</a></li>
+					<li><a href="../order/app.html" data-icon="plus"
+						class="ui-btn-active">주문</a></li>
+				</ul>
+			</div>
+		</div>
+		<div data-role="content" data-theme="a">
+
+			<fieldset data-role="controlgroup">
+				<select name="select-native" id="select-native" data-icon="plus">
+					<option>업체명</option>         
+					<option value="1">납품업체1</option>         
+					<option value="2">납품업체2</option>         
+					<option value="3">납품업체3</option>     
+				</select>
+			</fieldset>
+
+			<h2>Forms</h2>
+
+			<form action="#" method="get">
+
+				<div data-role="fieldcontain">
+					<label for="goodsCode">상품코드:</label> 
+					<input type="search"
+						name="goodsCode" id="goodsCode" />
+				</div>
+				<div data-role="fieldcontain">
+					<label for="goodsName">상품명:</label> 
+					<input type="search"
+						name="goodsName" id="goodsName" />
+				</div>
+				<div data-role="fieldcontain">
+					<label for="deleveryDate">배송요청일:</label> 
+					<input id="delDate"
+						type="text" data-role="date">
+				</div>
+
+				<div data-role="fieldcontain">
+					<label for="select-choice-a" class="select">분류:</label> <select
+						name="category" id="category" data-native-menu="false">
+						<option>분류</option>
+						<option value="청과류">청과류</option>
+						<option value="육류">육류</option>
+						<option value="양념">양념</option>
+						<option value="야호">야호</option>
+					</select>
+				</div>
+
+				<div data-role="fieldcontain">
+					<label for="select-choice-a" class="select">단위:</label> <select
+						name="unit" id="unit" data-native-menu="false">
+						<option>단위</option>
+						<option value="kg">kg</option>
+						<option value="g">g</option>
+						<option value="L">L</option>
+						<option value="ea">EA</option>
+					</select>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="slider">수량:</label>
+				 	<input type="range" name="quantity" id="quantity" value="10" min="0" max="20" data-highlight="true"  />
+				</div>
+				
+				<div class="ui-body ui-body-b">
+					<fieldset class="ui-grid-a">
+						<div class="ui-block-a">
+						<input type="button" value="+"  data-theme="e" onclick="addRowToTable();" />
+						
+						</div>
+						<div class="ui-block-b">
+							<button type="submit" data-theme="a">X</button>
+						</div>
+					</fieldset>
+				</div>
+
+				
+ 	 <table data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" id="boardTable">
+        <tr>
+          <th data-priority="1">#</th>
+          <th data-priority="2">상품명</th>
+          <th data-priority="3">수량</th>	
+          <th data-priority="4">단위</th>				
+        </tr>
+    </table>
+
+			<div data-role="fieldcontain">
+				<fieldset class="ui-grid-a">
+					<button style="height:50px" type="submit" data-theme="d">주문하기</button>
+				</fieldset>
+			</div>
+
+			</form>
+
+		</div>
+	</div>
+	
+
+
+
+<script>
+function addRowToTable()
+{
+  var tbl = document.getElementById('tblSample');
+  var lastRow = tbl.rows.length;
+  // if there's no header row in the table, then iteration = lastRow + 1
+  var iteration = lastRow;
+  var row = tbl.insertRow(lastRow);
+  
+  // left cell
+  var cellLeft = row.insertCell(0);
+  var textNode = document.createTextNode(iteration);
+  cellLeft.appendChild(textNode);
+  
+  // right cell
+  var cellRight = row.insertCell(1);
+  var el = document.createElement('input');
+  el.type = 'text';
+  el.name = 'txtRow' + iteration;
+  el.id = 'txtRow' + iteration;
+  el.size = 40;
+  
+  el.onkeypress = keyPressTest;
+  cellRight.appendChild(el);
+  
+  // select cell
+  var cellRightSel = row.insertCell(2);
+  var sel = document.createElement('select');
+  sel.name = 'selRow' + iteration;
+  sel.options[0] = new Option('text zero', 'value0');
+  sel.options[1] = new Option('text one', 'value1');
+  cellRightSel.appendChild(sel);
+}
+
+$( "#delDate" ).datepicker();
+
+function openInNewWindow(frm)
+{
+  // open a blank window
+  var aWindow = window.open('', 'TableAddRowNewWindow',
+   'scrollbars=yes,menubar=yes,resizable=yes,toolbar=no,width=400,height=400');
+   
+  // set the target to the blank window
+  frm.target = 'TableAddRowNewWindow';
+  
+  // submit
+  frm.submit();
+}
+
+</script>
+
+</body>
+</html>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>jQuery Mobile Twitter Bootstrap Theme</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+		
+<link rel="stylesheet" href="../css/Bootstrap.min.css">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+<link rel="stylesheet" href="../css/jquery.mobile.icons.min.css"">
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+		<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+	
+	
+<style type="text/css"> 
+    table { width:100%; }
+    table caption { text-align:left;  }
+    table thead th { text-align:left; border-bottom-width:1px; border-top-width:1px; }
+    table th, td { text-align:left; padding:6px;} 
+</style> 
+	
+	</head>
+	<body>
+	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<h1>Carrot</h1>
+			<a href="index.html" data-icon="gear" class="ui-btn-right"
+				style="border: #222222; background-color: #222222"></a>
+			<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a href="../order/today.html" data-icon="star">today</a></li>
+					<li><a href="../order/list.html" data-icon="grid">주문내역</a></li>
+					<li><a href="../order/app.html" data-icon="plus"
+						class="ui-btn-active">주문</a></li>
+				</ul>
+			</div>
+		</div>
+		<div data-role="content" data-theme="a">
+
+			<fieldset data-role="controlgroup">
+				<select name="select-native" id="select-native" data-icon="plus">
+					<option>업체명</option>         
+					<option value="1">납품업체1</option>         
+					<option value="2">납품업체2</option>         
+					<option value="3">납품업체3</option>     
+				</select>
+			</fieldset>
+
+			<h2>Forms</h2>
+
+			<form action="#" method="get">
+
+				<div data-role="fieldcontain">
+					<label for="goodsCode">상품코드:</label> 
+					<input type="search"
+						name="goodsCode" id="goodsCode" />
+				</div>
+				<div data-role="fieldcontain">
+					<label for="goodsName">상품명:</label> 
+					<input type="search"
+						name="goodsName" id="goodsName" />
+				</div>
+				<div data-role="fieldcontain">
+					<label for="deleveryDate">배송요청일:</label> 
+					<input id="delDate"
+						type="text" data-role="date">
+				</div>
+
+				<div data-role="fieldcontain">
+					<label for="select-choice-a" class="select">분류:</label> <select
+						name="category" id="category" data-native-menu="false">
+						<option>분류</option>
+						<option value="청과류">청과류</option>
+						<option value="육류">육류</option>
+						<option value="양념">양념</option>
+						<option value="야호">야호</option>
+					</select>
+				</div>
+
+				<div data-role="fieldcontain">
+					<label for="select-choice-a" class="select">단위:</label> <select
+						name="unit" id="unit" data-native-menu="false">
+						<option>단위</option>
+						<option value="kg">kg</option>
+						<option value="g">g</option>
+						<option value="L">L</option>
+						<option value="ea">EA</option>
+					</select>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="slider">수량:</label>
+				 	<input type="range" name="quantity" id="quantity" value="10" min="0" max="20" data-highlight="true"  />
+				</div>
+				
+				<div class="ui-body ui-body-b">
+					<fieldset class="ui-grid-a">
+						<div class="ui-block-a">
+							<button id="addItemBtn" type="button" data-theme="e">+</button>
+						</div>
+						<div class="ui-block-b">
+							<button type="submit" data-theme="a">X</button>
+						</div>
+					</fieldset>
+				</div>
+
+				
+ 	 <table data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" id="orderTable">
+      <thead>
+        <tr>
+          <th data-priority="1">상품명</th>
+          <th data-priority="2">단위</th>
+          <th data-priority="3">수량</th>			
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="item1">
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+        <!--   
+          <td style="width:20%"><button class="delBtn" data-theme="c">삭제</button></td>
+         -->
+        </tr>
+      </tbody>
+    </table>
+
+			<div data-role="fieldcontain">
+				<fieldset class="ui-grid-a">
+					<button style="height:50px" type="submit" data-theme="d">주문하기</button>
+				</fieldset>
+			</div>
+
+			</form>
+
+		</div>
+	</div>
+	
+	<script>
+
+
+	$(document).ready(function(){
+
+		$(document).on('click','#addItemBtn', function() {
+
+		    var table = document.getElementById("table");
+		    
+		    var row= document.createElement("tr");
+		    var td1 = document.createElement("td");
+		    var td2 = document.createElement("td");
+		    var td3 = document.createElement("td");    
+
+		    td1.innerHTML = document.getElementById("goodsName").value;
+		    td2.innerHTML  = document.getElementById("unit").value;
+		    td3.innerHTML  = document.getElementById("quantity").value;
+
+		    row.appendChild(td1);
+		    row.appendChild(td2);
+		    row.appendChild(td3);
+
+		    table.children[0].appendChild(row);
+		 });
+
+	    // 삭제버튼 클릭시
+	    $(".delBtn").live("click", function(){
+	        var clickedRow = $(this).parent().parent();
+	        var cls = clickedRow.attr("class");
+	         
+	        // 각 항목의 첫번째 row를 삭제한 경우 다음 row에 td 하나를 추가해 준다.
+	        if( clickedRow.find("td:eq(0)").attr("rowspan") ){
+	            if( clickedRow.next().hasClass(cls) ){
+	                clickedRow.next().prepend(clickedRow.find("td:eq(0)"));
+	            }
+	        }
+
+	        clickedRow.remove();
+
+	        // rowspan 조정
+	        resizeRowspan(cls);
+	    });
+
+	});
+
+
+
+	function Board(category, goodsName, unit, quantity) {
+		this.category = category;
+		this.goodsName = goodsName;
+		this.unit = unit;
+		this.quantity = quantity;
+		this.count = 0;
+	}
+
+	function resetForm() {
+		$('#btnCancel').click();
+	}
+
+	var boardList = [];
+
+	$('#btnCancel').click(function(event) {
+		changeState('create');
+	});
+
+	$('#addItemBtn').click(function(event) {
+		var board = new Board(
+				$('#category').val());
+				$('#goodsName').val(),
+				$('#unit').val(),
+				$('#quantity').val(),
+
+		boardList.push(board);
+
+		refreshBoardList();
+	});
+
+
+	function refreshBoardList() {
+		var boardTable = $('#boardTable');
+		
+		$('.dataRow').remove();
+
+		for (var i in boardList) {
+			$('<tr>')
+				.appendTo(boardTable)
+				.attr('class', 'dataRow')
+				.append($('<td>').html(i))
+				.append($('<td>').html(boardList[i].category))
+				.append($('<td>').html(boardList[i].goodsName)
+				.append($('<td>').html(boardList[i].quantity))
+				.append($('<td>').html(boardList[i].unit));
+
+		}
+	}
+
+	
+	
+	</script>
+	
+</body>
+</html>

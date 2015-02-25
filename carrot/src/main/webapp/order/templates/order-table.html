@@ -1,0 +1,36 @@
+<table id='orderTable' class="table table-striped table-hover">
+	<thead>
+		<tr class="table_head">
+			<th><input type="checkbox" class="check-all"></th>
+			<th>주문코드</th>
+			<th>거래처명</th>
+			<th>등급</th>
+			<th>배송일자</th>
+			<th>주문일자</th>
+			<th>일총액</th>
+			<th>배송상태</th>
+			<th>메모</th>
+			<th>확인</th>
+		</tr>
+	</thead>
+
+	{{#each orders}}
+	<tr class="data-row">
+		<td><input type="checkbox" data-no="{{ocode}}" class="ab"></td>
+		<td class="go">{{ocode}}</td>
+		<td class="go">{{oname}}</td>
+		<td class="go">{{ograde}}</td>
+		<td class="go">{{oddate}}</td>
+		<td class="go">{{oodate}}</td>
+		<td class="go">{{oprice}}</td>
+		<td class="go">{{del_stat}}</td>
+		<td class="go">{{omemo}}</td>
+		<td><button id='ok'>확인</button></td>
+	</tr>
+	{{/each}}
+
+</table>
+
+<script>
+	
+</script>

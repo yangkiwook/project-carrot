@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>모바일 회원가입</title>
+</head>
+<script src="../js/jquery-1.11.1.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="Mobile_join.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<!-- <script src="http://code.jquery.com/jquery-1.7.js"   type="text/javascript"></script> -->
+
+<link href='Mobile_join.css' rel="stylesheet" type="text/css">
+<!-- <link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap-theme.min.css"> -->
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<!-- jquery mobile 사용법 -->
+<script
+	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+<body>
+
+	<div id="wrap">
+		<div>
+			<h1>
+				<strong>모바일 회원가입</strong>
+			</h1>
+		</div>
+		<fieldset>
+
+			<form class="form-horizontal" role="form">
+				<div id="checkMsg">&nbsp</div>
+
+				<div data-role="fieldcontain">
+					<label for="ph">휴대폰 번호(ID)</label> <input type="text" name="mph"
+						id="mph" placeholder="아이디" />
+				</div>
+
+
+				<!-- 			<div data-role="fieldcontain">
+					<label for="id">ID</label> <input type="text" name="mid" id="mid"
+						placeholder="자동입력" />
+				</div> -->
+
+
+				<div data-role="fieldcontain">
+					<label for="pwd">비밀번호</label> <input type="password" name="mpwd"
+						id="mpwd" onkeyup="checkPwd()" />
+				</div>
+
+				<div data-role="fieldcontain">
+					<label for="pwd_check">비밀번호 확인</label> <input type="password"
+						name="mpwd_check" id="mpwd_check" onkeyup="checkPwd()" />
+				</div>
+				<div id="checkPwd"></div>
+
+				<div data-role="fieldcontain">
+					<label for="name">상호명</label> <input type="text" name="mname"
+						id="mname" placeholder="상호명" />
+				</div>
+
+				<!-- 				<div data-role="fieldcontain">
+					<label for="code" id="code_label">납품업체 코드</label> <input type="text"
+						name="mcode" id="mcode" value="납품업체의 코드를 입력해주세요." />
+				</div> -->
+
+				<div data-role="fieldcontain" id="code_div">
+					<label for=text id="code_label">납품업체</label>
+					 <input
+						type="text" name="mcode" id="mcode"
+						placeholder="납품업체를 입력해주세요." />
+					
+				</div>
+						<h1 id=result>&nbsp</h1>
+
+
+				<div data-role="fieldcontain">
+					<label for="memo">남기실 말</label>
+					<textarea name="mmemo" id="mmemo" placeholder=""></textarea>
+				</div>
+
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-b">
+						<input type="button" id="mjoin" data-theme="b" value="회원가입"></button>
+					</div>
+					<div class="ui-block-a">
+						<input type="button" id="mcancel" data-theme="a" value="취소"></button>
+					</div>
+
+				</fieldset>
+
+			</form>
+		</fieldset>
+
+	</div>
+
+
+</body>
+	
+</html>
+

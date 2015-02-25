@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="../css/Bootstrap.min.css">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+<link rel="stylesheet" href="../css/jquery.mobile.icons.min.css">
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+	<script type="text/javascript" src='../../js/handlebars-v2.0.0.js'></script>
+	<script type="text/javascript" src='../../js/require.js'></script>
+<!-- 
+<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+ -->
+<link rel="stylesheet" type="text/css"
+	href="/carrot/css/fileinput.min.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/carrot/css/bootstrap-select.css">
+<link rel='stylesheet' href='/carrot/css/common-mobile.css'>
+
+
+
+
+<meta charset="UTF-8">
+
+
+<style type="text/css"> 
+    table { width:100%; }
+    table caption { text-align:left;  }
+    table thead th { text-align:left; border-bottom-width:1px; border-top-width:1px; }
+    table th, td { text-align:left; padding:6px;} 
+</style> 
+
+
+</head>
+
+<body>
+	<div data-role="page" id="addOrder" data-theme="a" >
+		<div data-role="header" data-position="inline">
+			<h1>Carrot</h1>
+			<a href="index.html" data-icon="gear" class="ui-btn-right"
+				style="border: #222222; background-color: #222222"></a>
+			<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a href="today.html" data-ajax="false" data-icon="star">today</a></li>
+					<li><a href="list.html" data-ajax="false" data-icon="grid">주문내역</a></li>
+					<li><a href="app.html" data-ajax="false" data-icon="plus" class="ui-btn-active">주문</a></li>
+				</ul>
+			</div>
+		</div>
+		<div data-role="content" data-theme="a">
+
+			<form>
+				<div id="orderFirst">
+					<div data-role="fieldcontain">
+						<select id="selectCompany" data-native-menu="false" data-icon="plus">
+							<option>업체명</option>  
+						</select>					
+					</div>
+					<div data-role="fieldcontain">
+						<label for="deleveryDate">배송요청일:</label> 
+						<input id="delDate"	type="text"  data-role="date">
+					</div>
+				
+					<div data-role="fieldcontain">
+						<label for="slider2">간편주문:</label>
+						<select name="myOrder" id="myOrder" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select>
+					</div>
+				
+					<div data-role="fieldcontain">
+						<fieldset class="ui-grid-a">
+							<button id="newOrder" type="button" data-theme="a">주문하기</button>
+						</fieldset>
+					</div>
+				</div>
+				<div id="myOrderSecond"></div>
+				<div id="orderSecond">
+					<div data-role="fieldcontain">
+						<label for="goodsCode">상품코드:</label> 
+						<input type="search"
+							name="goodsCode" id="goodsCode" />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="select-choice-a" class="select">분류:</label> 
+						<select	name="category" id="category" data-native-menu="false">
+						</select>
+					</div>
+	
+					<div data-role="fieldcontain">
+						<label for="select-choice-a" class="select">상품명:</label> 
+						<select
+							name="goodsName" id="goodsName" data-native-menu="false">
+						</select>
+					</div>
+	
+					<div data-role="fieldcontain">
+						<label for="select-choice-a" class="select">단위:</label> 
+						<input type="text"
+							name="unit" id="unit" />
+					</div>
+					
+					<div data-role="fieldcontain">
+						<label for="slider">수량:</label>
+					 	<input type="range" name="quantity" id="quantity" value="10" min="1" max="50" data-highlight="true"  />
+					</div>
+					
+					<div class="ui-body ui-body-b">
+						<fieldset class="ui-grid-a">
+							<div class="ui-block-a">
+							<button id="addItemBtn" type="button" data-theme="e">+</button>
+							
+							</div>
+							<div class="ui-block-b">
+								<button id="btnCancel" type="reset" data-theme="a">X</button>
+							</div>
+						</fieldset>
+					</div>
+			 	 <table data-role="table" data-mode="columntoggle" class="ui-responsive ui-shadow" id="orderTable">
+			      <thead>
+							<tr>
+			          <th>상품코드</th>		 
+			          <th>상품명</th>
+			          <th>단위</th>
+			          <th>수량</th>
+			          <th></th>		      
+			        </tr>
+			      </thead>
+			      <tbody>
+			      </tbody>
+			    </table>
+		    		<div data-role="fieldcontain">
+						<label for="textarea">메모:</label>
+						<textarea cols="40" rows="8" name="note" id="note"></textarea>
+					</div>
+
+		    
+					<div data-role="fieldcontain">
+						<fieldset class="ui-grid-a">
+							<button id="addOrderBtn" style="height:50px" type="button" data-theme="d">주문하기</button>
+						</fieldset>
+					</div>
+				</div>
+
+			</form>
+
+
+		</div>
+	</div>
+	
+
+<script>
+
+	var order;
+/* 
+order.goodsName = $(MyRows[i]).find('td:eq(0)').html();
+order.unit = $(MyRows[i]).find('td:eq(1)').html();
+order.quantity = $(MyRows[i]).find('td:eq(2)').html();
+order.goodsCode = $(MyRows[i]).find('td:eq(3)').html();
+var order = {
+		supplierNo : '',
+		delDate : '',
+		goodsName : '',
+		unit : '',
+		quantity :
+} */
+
+$(document).ready( function (){
+	initOrder();	
+
+	var state = 'off';
+
+	
+	$("#newOrder").click(function() {
+		order = new Object();
+		order.supplierNo = $('#selectCompany').val();
+		order.supplierName = $('#selectCompany option:selected').text();
+		order.delDate = $('#delDate').val();
+		
+		readySelector2(order.supplierNo);
+		console.log(order);
+		
+		$("#orderFirst").hide();
+		$("#orderSecond").show();
+		
+		if (state == 'on') {
+			myOrderLoad(state);
+		}
+	});
+	
+		// on 이면 최근 주문목록을 불러옴
+		$('#myOrder').change(function() {
+			state = $(this).find('option:selected').val();
+			console.log(state);
+		});
+		
+		// 분류를 선택하면 상품명 셀렉터가 변경!
+		$('#category').change(function() {
+			var option = $(this).find('option:selected').val();
+			order.category = option;
+			console.log(order);
+			
+			$.getJSON('../../json/goods/optionlist.do?no=' + order.supplierNo + '&category=' + order.category, function(
+					data) {
+				var goodss = data.goodss;
+				console.log(goodss);
+
+				require([ 'text!templates/name-selector.html' ],
+						function(html) {
+							var template = Handlebars.compile(html);
+							$('#goodsName').html(template(data)).selectmenu('refresh');
+						});
+			});
+		});
+		
+
+		
+
+		$('#goodsName').change(function() {
+			var str = $(this).find('option:selected').val();
+			order.goodsName = $(this).find('option:selected').text();
+
+			var res = str.split(" ");
+			
+//			order.code = $(this).find('option:selected').dataset.code;
+			order.goodsCode = res[0];
+			order.unit = res[1];
+			order.goodsNo = parseInt(res[2]);
+			
+
+			
+			$('#unit').val(order.unit);
+			$('#goodsCode').val(order.goodsCode);
+			//$('#goodsCode').val(order.goodsNo);
+			
+		});
+		
+
+
+		$("#addItemBtn").click(function() {
+			if (!validateForm())
+				return;
+
+			var tr = $('<tr>');
+			$('<td>').html($('#goodsCode').val()).appendTo(tr);
+			$('<td>').html(order.goodsName).appendTo(tr);
+			$('<td>').html($('#unit').val()).appendTo(tr);
+			$('<td>').html($('#quantity').val()).appendTo(tr);
+			var cols = '<td><input type="button" class="ibtnDel" value="X" ></td>';
+			tr.append(cols);
+		    
+			$("#orderTable").find('tbody').append(tr);
+
+			$('#btnCancel').click();
+
+		});
+
+	  $("#orderTable").on("click", ".ibtnDel", function (event) {
+	      $(this).closest("tr").remove();
+	  });
+	    
+	    
+	    
+	    
+		$("#addOrderBtn").click(function() {
+			order.note = $('#note').val();
+			var MyRows = $('table#orderTable').find('tbody').find('tr');
+			for (var i = 0; i < MyRows.length; i++) {
+				order.goodsCode = $(MyRows[i]).find('td:eq(0)').html();
+				order.goodsName = $(MyRows[i]).find('td:eq(1)').html();
+				order.unit = $(MyRows[i]).find('td:eq(2)').html();
+				if ($(MyRows[i]).find("#orderqty").val()==null){
+					order.quantity = $(MyRows[i]).find('td:eq(3)').html();
+				} else
+				order.quantity = $(MyRows[i]).find("#orderqty").val();
+				//$("#orderqty").val()
+				//order.quantity = $(MyRows[i]).find('td:eq(3)').html();
+				console.log(order);
+				addOrder(order);
+			}
+		});
+
+	});
+
+
+	function myOrderLoad(state){
+			$.getJSON('../../json/order/myorder.do?no=' + order.supplierNo, function(
+					data) {
+				var orders = data.orders;
+				console.log(orders);
+
+				require([ 'text!templates/myorder-table.html' ],
+						function(html) {
+							var template = Handlebars.compile(html);
+							
+							$('#orderTable tbody').html(template(data));
+
+							$('#addOrder').page("destroy").page();
+						});
+			});		
+	}
+	
+	function initOrder() {
+		$("#orderFirst").show();
+		$("#orderSecond").hide();
+		$("#delDate").datepicker({
+		    dateFormat: "yy-mm-dd"
+		});
+
+	//	$('#addOrder').page("destroy").page();
+		readySelector();
+	}
+	
+	function readySelector() {
+
+		$.getJSON('../../json/company/list.do?', function(data) {
+			var companys = data.companys;
+
+			require([ 'text!templates/company-selector.html' ], function(html) {
+				var template = Handlebars.compile(html);
+
+				$('#selectCompany').html(template(data)).selectmenu('refresh');
+
+			});
+		});
+	}
+
+	function readySelector2(supplierNo) {
+	//	console.log(supplierNo);
+
+		$.getJSON('../../json/goods/optionlist.do?no=' + supplierNo, function(
+				data) {
+			var goodss = data.goodss;
+			console.log(goodss);
+
+			require([ 'text!templates/category-selector.html' ],
+					function(html) {
+						var template = Handlebars.compile(html);
+
+						$('#category').html(template(data)).selectmenu(
+								'refresh');
+					});
+		});
+
+	}
+
+	function validateForm() {
+		if ($('#goodsName').val().length == 0) {
+			alert('상품명은 필수 입력 항목입니다.');
+			return false;
+		}
+		if ($('#goodsCode').val().length == 0) {
+			alert('상품코드는 필수 입력 항목입니다.');
+			return false;
+		}
+		if ($('#unit').val().length == 0) {
+			alert('단위를 선택해 주세요.');
+			return false;
+		}
+
+		if ($('#quantity').val() == '0') {
+			alert('단위를 선택해 주세요.');
+			return false;
+		}
+		return true;
+	}
+
+	function addOrder(order) {
+		console.log("hi   ");
+		$.post('../../json/order/add.do', {
+			supplierNo : order.supplierNo,
+			goodsCode : order.goodsCode,
+			endDate : order.delDate,
+			quantity : order.quantity,
+			note : order.note
+		}, function(result) {
+			console.log(result);
+			if (result.status == "success") {
+				initOrder();
+			} else {
+				alert("서버가 바쁩니다. 잠시 후 다시 주문해 주십시오.");
+				initOrder();
+			}
+		}, 'json').fail(function(jqXHR, textStatus, errorThrown) {
+			alert(textStatus + ":" + errorThrown);
+		});
+	}
+</script>
+
+</body>
+</html>

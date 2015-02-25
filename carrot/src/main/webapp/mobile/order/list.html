@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="../css/Bootstrap.min.css">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+<link rel="stylesheet" href="../css/jquery.mobile.icons.min.css"">
+<link href='../css/fullcalendar.css' rel='stylesheet' />
+<link href='../css/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+<script src='../js/moment.min.js'></script>
+<script src='../js/fullcalendar.js'></script>
+<script src='../js/ko.js'></script>
+
+<style>
+/* 
+	body {
+		margin: 40px 10px;
+		padding: 0;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		font-size: 14px;
+	}
+ */
+
+</style>
+</head>
+<body>
+
+	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<h1>Carrot</h1>
+			<a href="index.html" data-icon="gear" class="ui-btn-right"
+				style="border: #222222; background-color: #222222"></a>
+			<div data-role="navbar" data-theme="a">
+				<ul>
+					<li><a href="../order/today.html" data-icon="star">today</a></li>
+					<li><a href="../order/list.html" data-icon="grid" class="ui-btn-active">주문내역</a></li>
+					<li><a href="../order/app.html" data-icon="plus">주문</a></li>
+				</ul>
+			</div>
+		</div>
+		<div data-role="content" data-theme="a">
+
+			<div id='calendar'></div>
+		</div>
+		
+
+<script>
+
+	$(document).ready(function() {
+		
+		$('#calendar').fullCalendar({
+//		  contentHeight: 280,
+			fixedWeekCount :false,
+			langs : 'ko',
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek'
+			},
+			defaultDate: '2015-02-03',
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			events: [
+				{
+					title: '알토란',
+					start: '2015-02-10',
+					url: 'view1.html',
+					textColor: 'white'
+				},
+				{
+					title: '푸드미아',
+					start: '2015-02-10',
+					url: 'view2.html',
+					color: 'red',
+					textColor: 'white'
+				},
+				{
+					title: '알토란',
+					url: 'view2.html',
+					start: '2015-02-06',
+					textColor: 'white'
+				}
+			]
+		});
+		
+	});
+
+</script>		
+		
+</body>
+</html>

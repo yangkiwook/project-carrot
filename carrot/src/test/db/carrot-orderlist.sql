@@ -1,0 +1,28 @@
+insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(1, 1, '00002','2015-01-01', '2015-02-01', 10);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(1, 1, '87002','2015-01-11', '2015-02-01', 20);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(1, 1, '85035','2015-01-21', '2015-02-01', 30);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(1, 1, '84883','2014-12-21', '2015-02-01', 40);
+  
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(2, 2, '84604','2015-01-14', '2015-02-02', 10);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(2, 2, '85024','2015-01-06', '2015-02-02', 20);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(2, 2, '85030','2014-12-09', '2015-02-02', 30);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(2, 2, '81229','2015-01-01', '2015-02-02', 40);
+  
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(3, 3, '40271','2015-01-02', '2015-02-06', 10);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(3, 3, '40289','2015-01-03', '2015-02-06', 20);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(3, 3, '28142','2015-01-05', '2015-02-06', 30);
+  insert into ORDERLIST(SNO, CNO, GCODE, ODATE, ORDATE, OQTY) 
+  values(3, 3, '40095','2015-01-08', '2015-02-06', 40);
+  
+  

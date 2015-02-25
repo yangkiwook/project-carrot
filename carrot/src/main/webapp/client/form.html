@@ -1,0 +1,116 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+			<div class="modal-header">
+				<button id="closeModal" type="button" class="close"
+					data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">업체 등록</h4>
+				<h4 class="modal-title" id="myModalLabel2" style="display: none">업체
+					변경</h4>
+			</div>
+			<div class="modal-body">
+
+				<form class='form-horizontal' role='form'>
+
+					<div class='form-group'>
+						<label for='clientCorName' class='col-sm-2 control-label'>상호</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientCorName'
+								placeholder='상호명'>
+						</div>
+					</div>
+					<div class='form-group'>
+						<label for='clientName' class='col-sm-2 control-label'>업주명</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientName'
+								placeholder='업주명'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='clientPassword' class='col-sm-2 control-label'>비밀번호</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientPassword'
+								placeholder='비밀번호'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='clientTel' class='col-sm-2 control-label'>전화번호</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientTel'
+								placeholder='전화번호 예) 000-0000-0000'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='clientMail' class='col-sm-2 control-label'>E-Mail</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientMail'
+								placeholder='E-Mail 예) example@example.com'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='mLevel' class='col-sm-2 control-label'>등급</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='mLevel'
+								placeholder='E-Mail 예) example@example.com'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='clientPostNo' class='col-sm-2 control-label'>우편번호</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientPostNo'
+								placeholder='우편번호 예) 000-000'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='clientAddress' class='col-sm-2 control-label'>주소</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientAddress'
+								placeholder='주소 (동,면,읍 까지만 기입)'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='clientAddressDet' class='col-sm-2 control-label'>상세주소</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientAddressDet'
+								placeholder='상세주소 (그밖에 상세주소)'>
+						</div>
+					</div>
+
+					<div class='form-group'>
+						<label for='clientMemo' class='col-sm-2 control-label'>메모</label>
+						<div class='col-sm-10'>
+							<input type='text' class='form-control' id='clientMemo'
+								placeholder='메모'>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+
+				<button id='btnAdd' type='button'
+					class='my-new-form btn btn-primary'>등록</button>
+				<button id='btnUpdate' type='button'
+					class='my-update-form btn btn-primary' style='display: none'>변경</button>
+				<button id='btnCancel' type='reset' class='btn btn-default'>취소</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="form.js"></script>
+
+<script>
+$('#url').fileinput('refresh');
+</script>
